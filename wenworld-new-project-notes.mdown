@@ -1,0 +1,55 @@
+## Workflow for checking out an existing Wenworld Project locally.
+
+### 1. Clone svn repository
+
+The following example clones the *example* subversion repository using the standard layout.
+
+    $ git svn clone -s https://svn.example.com/example example
+
+### 2. Dump Database
+
+Syntax:
+
+    $ pg_dump -U <username> <database_name> > database_name.sql
+
+The following example dumps the database using the user *example* and the database named *example*.
+
+    $ pg_dump -U example example > example.sql
+
+### 3. Create a Database
+
+Create a database with an owner that has the same name. The following example creates a user with the username *example* and database named *example*.
+
+    $ createuser <example>
+    $ createdb example -O example
+
+### 4. Import the Database
+
+Copy the dump file you created in step 2 to your local computer and then run the flowing command.
+
+    $ psql -U ncw_cashmere -d ncw_cashmere < ncw_cashmere.sql
+
+### 5. Setup your virtual environment workspace
+
+    $ mkvirtualenv --site-no-packages example
+    $ workon example
+
+Add the root project path to virtualenv_path_extensions.pth
+
+    $ cdsitepackages
+    $ vi virtualenv_path_extensions.pth
+    
+Create a local_settings.py in the root of the project and add these settings to it.
+
+    # Django-enviroment settings
+    DJANGO_ENV_PROJECT_DIR     = '/Users/oconnor/Sites/wenworld/communities'
+    DJANGO_ENV_SETTINGS_MODULE = 'local_settings'
+    # DJANGO_ENV_SERVER_ADDR   = '127.0.0.1'
+    # DJANGO_ENV_SERVER_PORT   = '8000'
+    DJANGO_ENV_FABFILE         = '/Users/oconnor/Sites/schools/schools/config/fabfile.py'
+
+    from settings_sitename import *
+
+### 6. Install needed packages
+
+    $ pip install psycopg2

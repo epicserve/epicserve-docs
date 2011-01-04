@@ -1,0 +1,6 @@
+I followed this guide, https://help.ubuntu.com/community/Nagios2
+
+Then I had to do the following to get notifications to work
+
+apt-get remove exim4
+apt-get install sendmail

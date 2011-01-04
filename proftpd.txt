@@ -1,0 +1,215 @@
+# used the following guide which I got from http://www.debuntu.org/how-to-ftp-virtual-host-with-proftpd-mysql
+
+1. Install proftpd and proftpd-mysql 
+
+$ sudo apt-get install proftpd proftpd-mysql
+
+2. Local user and group:
+
+In our example, the ftp user uid and group gid will be 3001 (this value will
+be used later on). The local user we are going to create will have /dev/null
+as home and a shell of /bin/false.
+
+To create the group and user type:
+
+$ groupadd -G 3001 ftpgroup
+$ useradd -s /bin/false -d /bin/null -c "proftpd user" --uid 3001 -g ftpgroup
+ftpuser
+
+3. MySQL Database:
+
+Now, it is time to create the database, grant a user permissions and finally
+create the tables.
+
+The database will be called proftpddb and user proftpuser will be able to
+connect from localhost using password proftpdpassword.
+3.1 Create the database:
+
+Log into mysql as root:
+
+$ mysql -u root -p
+
+And create the database proftpddb:
+
+mysql> CREATE DATABASE proftpddb;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> GRANT USAGE ON *.* TO proftpduser@localhost IDENTIFIED BY
+'proftpdpassword';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT SELECT, INSERT, UPDATE, DELETE ON proftpddb.* TO
+'proftpduser'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> quit
+
+After we create the database and gave access to a specific user we have to
+create the tables that are going to host our groups and users.
+
+3.2. Creating database tables:
+
+There is different ways of creating the tables. Either interactively through
+mysql command line or by using a sql dump file.
+In this tutorial we will create a dump file and inject it directly from the
+shell command line.
+
+Copy the following text in a file called proftpd-mysql.sql:
+
+CREATE TABLE ftpgroup (
+ groupname varchar(16) NOT NULL default '',
+ gid smallint(6) NOT NULL default '3000',
+ members varchar(16) NOT NULL default '',
+ KEY groupname (groupname)
+ ) TYPE=MyISAM COMMENT='ProFTPd group table';
+
+ 
+
+ CREATE TABLE ftpuser (
+ id int(10) unsigned NOT NULL auto_increment,
+ userid varchar(32) NOT NULL default '',
+ passwd varchar(80) NOT NULL default '',
+ uid smallint(6) NOT NULL default '3000',
+ gid smallint(6) NOT NULL default '3000',
+ homedir varchar(255) NOT NULL default '',
+ shell varchar(16) NOT NULL default '/sbin/nologin',
+ count int(11) NOT NULL default '0',
+ accessed datetime NOT NULL default '0000-00-00 00:00:00',
+ modified datetime NOT NULL default '0000-00-00 00:00:00',
+ PRIMARY KEY (id),
+ UNIQUE KEY userid (userid)
+ ) TYPE=MyISAM COMMENT='ProFTPd user table';
+
+Save it and finally type:
+
+$ mysql -u root -p proftpddb < proftpd-mysql.sql
+
+Note that this must be done as root since proftpduser does not have
+credentials for creating tables in database proftpddb.
+
+Finally, we are going to create our first virtual ftp user and group.
+3.3. First user and group:
+
+In order to create our first user and password, we are going to connect using
+the database user access we have just created:
+
+$ mysql -u proftpduser -p proftpddb
+
+and create your first group:
+
+mysql> INSERT INTO `ftpgroup` (`groupname`, `gid`, `members`) VALUES
+('ftpgroup', 3001, 'ftpuser');
+
+and your first user which is going to belong to this group:
+
+mysql> INSERT INTO `ftpuser` (`id`, `userid`, `passwd`, `uid`, `gid`,
+`homedir`, `shell`, `count`, `accessed`, `modified`) VALUES (1, 'firstuser',
+PASSWORD('userpassword'), 3001, 3001, '/var/proftp/firstuser',
+'/sbin/nologin', 0, '', '');
+
+In order to have your user able to copy and delete files to their home dir,
+you have to create /var/proftp and give proftpuser/proftpgroup write access to
+it:
+
+$ mkdir /var/proftp
+$ chown ftpuser:ftpgroup /var/proftp
+$ chmod 775 /var/proftp
+
+Well, now, we still need to configure proFTPd to use our newly create mysql
+database as a backend.
+
+4. Configure ProFTPd:
+
+ProFTPd main configuration file is /etc/proftpd/proftpd.conf. On Debian,
+proFTPd over the capability of including files from the main configuration
+file. Thus, we are going to create a file call /etc/proftpd/mysql.conf which
+we will include from the main file.
+This has the advantage that if the new config is not working, we can easily
+comment our include and fall back to the previous config.
+
+So, get ready with your favorite text editor, edit /etc/proftpd/mysql.conf and
+put the following inside:
+
+# Force the use of mysql backend
+SQLBackend                      mysql
+
+# The passwords in MySQL are using its own PASSWORD function
+SQLAuthTypes                    Backend
+SQLAuthenticate                 users* groups*
+
+# details to connect to mysql db
+# dbname@host dbuser dbpass
+SQLConnectInfo                  proftpddb@localhost proftpduser
+proftpdpassword
+
+# Let proFTPd know the name of the columns in the user table
+# Mind that this need to match the name in you table
+SQLUserInfo                     ftpuser userid passwd uid gid homedir shell
+
+# Let proFTPd know the name of the columns in the group table
+# we want it to interact with. Again the names match with those in the db
+SQLGroupInfo                    ftpgroup groupname gid members
+
+# proftpd will dynamicaly create if the homedir does not yet exist
+SQLHomedirOnDemand              on
+
+# update counter when a user logs in
+SQLLog                          PASS updatecount
+SQLNamedQuery                   updatecount UPDATE "count=count+1,
+accessed=now() WHERE userid='%u'" ftpuser
+
+# change modified time anytime a user delete a file or upload one
+SQLLog                          STOR,DELE modified
+SQLNamedQuery                   modified UPDATE "modified=now() WHERE
+userid='%u'" ftpuser
+
+No, let's modify proftpd.conf and add the following lines just after Include
+/etc/proftpd/modules.conf:
+
+Include /etc/proftpd/mysql.conf
+RootLogin off
+RequireValidShell off
+
+The include will include our customized file, RootLogin is to off to forbid
+root to use the ftp service and finally RequireValidShell is to off to allow
+our virtual users to log in. Remember that the shell of our ftp user is
+/bin/false.
+
+Finally restart proftpd:
+
+$ /etc/init.d/proftpd restart
+
+That's it, you can now connect to your ftp server using user firstuser.
+5. Tips
+
+If you get the following error:
+
+May 22 21:37:10 mydomain.com proftpd[9308] mydomain.com
+(WW.XX.YY.ZZ[WW.XX.YY.ZZ]): USER firstuser (Login failed): Invalid shell:
+'/sbin/nologin'
+
+This is most probably because you forget to turn RequireValidShell to off
+
+
+#### The following are extra things that I had to do that weren't in the
+#### origional guide. 
+
+# disabled ipv6
+
+Added the following lines to /etc/modprobe.d/aliases
+
+alias net-pf-10 ipv6 off
+alias net-pf-10 off
+alias ipv6 off 
+
+I probably didn't need to do the above and could have just gottin away with
+changing "UseIPv6" to "off" in /etc/proftpd/proftpd.conf because that's what
+finally got it working 
+
+# Added the following to only allow staff access to the staff directory
+<Directory /var/proftp/ciy/staff>
+        <Limit ALL>
+                AllowUser ftpstaff
+                DenyAll
+        </Limit>
+</Directory>

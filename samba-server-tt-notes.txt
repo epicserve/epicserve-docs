@@ -1,0 +1,132 @@
+Ever since the new hotfixes that Microsoft rolled out a couple days ago
+I'm been having problems accessing my samba share that has been working
+perfectly for like 3 months or more.  The samba server is on a Debian
+GNU/Linux 3.1 box running Samba 3.0.14a-Debian.  I can access the share
+from my windows computer if I use \\ip_address but if I use \\hostname I
+get a password dialog box.  When I type the user name and password I
+just get another password prompt.  I'm not sure what else to try at this
+point.
+
+#### Error log information ####
+
+# This error indecates the samba server clock but be out of sync with
+# the AD server clock.  I've double checked and the clocks are in sync.
+grievous:/var/log/samba# tail log.winbindd
+[2005/10/13 19:00:59, 1] 
+libsmb/cliconnect.c:cli_session_setup_kerberos(539)
+  spnego_gen_negTokenTarg failed: Clock skew too great in KDC reply
+[2005/10/13 19:01:14, 1] libsmb/clikrb5.c:ads_krb5_mk_req(389)
+  ads_krb5_mk_req: krb5_get_credentials failed for olmsted$@ARCH.KSU.EDU 
+(Clock skew too great in KDC reply)
+[2005/10/13 19:01:14, 1] 
+libsmb/cliconnect.c:cli_session_setup_kerberos(539)
+  spnego_gen_negTokenTarg failed: Clock skew too great in KDC reply
+[2005/10/13 19:06:05, 1] libsmb/clikrb5.c:ads_krb5_mk_req(389)
+  ads_krb5_mk_req: krb5_get_credentials failed for olmsted$@ARCH.KSU.EDU 
+(Clock skew too great in KDC reply)
+[2005/10/13 19:06:05, 1] 
+libsmb/cliconnect.c:cli_session_setup_kerberos(539)
+  spnego_gen_negTokenTarg failed: Clock skew too great in KDC reply
+
+
+grievous:/var/log/samba# tail log.smbd
+[2005/10/13 19:05:14, 1] smbd/sesssetup.c:reply_spnego_kerberos(173)
+  Failed to verify incoming ticket!
+[2005/10/13 19:05:14, 1] smbd/sesssetup.c:reply_spnego_kerberos(173)
+  Failed to verify incoming ticket!
+[2005/10/13 19:05:14, 1] smbd/sesssetup.c:reply_spnego_kerberos(173)
+  Failed to verify incoming ticket!
+[2005/10/13 19:05:15, 1] smbd/sesssetup.c:reply_spnego_kerberos(173)
+  Failed to verify incoming ticket!
+[2005/10/13 19:05:15, 1] smbd/sesssetup.c:reply_spnego_kerberos(173)
+  Failed to verify incoming ticket!
+
+
+grievous:/var/log/samba# tail log.nmbd
+  This response was from IP 129.130.81.192, reporting an IP address of 
+129.130.81.192.
+[2005/10/13 19:00:47, 0] nmbd/nmbd.c:terminate(56)
+  Got SIGTERM: going down...
+[2005/10/13 19:00:50, 0] nmbd/nmbd.c:main(668)
+  Netbios nameserver version 3.0.14a-Debian started.
+  Copyright Andrew Tridgell and the Samba Team 1994-2004
+[2005/10/13 19:00:50, 0] param/loadparm.c:map_parameter(2470)
+  Unknown parameter encountered: "ads server"
+[2005/10/13 19:00:50, 0] param/loadparm.c:lp_do_parameter(3152)
+  Ignoring unknown parameter "ads server"
+
+
+# Information showing I'm a domain member
+grievous:/etc/samba# net ads testjoin
+Join is OK
+
+# Info from smbclient
+grievous:/etc/samba# smbclient -L grievous -U username
+Password:
+Domain=[GENERICHOST] OS=[Unix] Server=[Samba 3.0.14a-Debian]
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        share1          Disk
+        share2          Disk
+        IPC$            IPC       IPC Service ()
+        ADMIN$          IPC       IPC Service ()
+Domain=[GENERICHOST] OS=[Unix] Server=[Samba 3.0.14a-Debian]
+
+        Server               Comment
+        ---------            -------
+        AALTO
+        GRIEVOUS
+
+        Workgroup            Master
+        ---------            -------
+        GENERICHOST          AALTO
+
+# Using nbtstat -c shows the correct netbios name and ip address for the
+# server
+
+# Samba Config
+[global]
+  # general options
+  workgroup = GENERICHOST
+  netbios name = grievous
+  server string = 
+  # winbindd configuration
+  # default winbind separator is \, which is good if you
+  # use mod_ntlm since that is the character it uses.
+  # users only need to know the one syntax
+  winbind separator = +
+  # idmap uid and idmap gid are aliases for
+  # winbind uid and winbid gid, respectively
+  idmap uid = 10000-20000
+  idmap gid = 10000-20000
+  winbind enum users = yes
+  winbind enum groups = yes
+  template homedir = /home/%D/%U
+  template shell = /bin/bash
+  # Active directory joining
+  # "ads server" is only necessary if your kdc
+  # can't be located using /etc/krb5.conf 
+  security = ads
+  wins server = xxx.xxx.xxx.xxx xxx.xxx.xxx.xxx
+  # encrypt passwords = yes is now default in Samba3 
+  encrypt passwords = yes
+  realm = generichost.domain.tld
+  # this handles the "ads server = " directive as well 
+  password server = generichost.domain.tld
+
+[share1]
+  path = /var/www/capd
+  valid users = username
+  admin users = username
+  read list = username
+  write list = username
+  read only = No
+  
+[share2]
+  path = /var/www/dev.capd
+  valid users = username
+  admin users = username
+  read list = username
+  write list = username
+  read only = No

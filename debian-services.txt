@@ -1,0 +1,11 @@
+# From http://www.shallowsky.com/linux/debnotes.html
+
+update-rc.d svc defaults
+    Enable service at boot time. chkconfig svc on
+update-rc.d -f svc remove
+    Disable service at boot time. chkconfig svc off
+    -f means force removal of the /etc/rc.? scripts while leaving the basic script in /etc/init.d (so you can change your mind later). --purge means remove the script from init.d.
+update-rc.d svc start 20 2 3 4 5 . stop 20 0 1 6
+    Enable service at boot time in the given runlevels, like chkconfig svc --levels 2345 on
+For listing active services, I wrote a shell script: lsconfig
+    What services are currently enabled? chkconfig --list

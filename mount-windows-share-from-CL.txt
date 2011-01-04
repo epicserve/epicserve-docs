@@ -1,0 +1,5 @@
+// one that might work in another situation
+sudo mount -t smbfs -o username=username //server/share /mnt/share
+
+// the one that worked
+sudo mount -t cifs -o username=username //server/share /home/username/share/

@@ -1,0 +1,20 @@
+# dpkg
+dpkg -l            # To list packages
+dpkg -L <pkg_name> # To list files in a package:
+
+# apt-cache
+apt-cache search <pkg_name>  # To search all available packages:
+apt-cache showpkg <pkg_name> # To find out more about a potential package:
+
+# apt-get
+apt-get update        # To update package database with latest avail versions
+apt-get -u upgrade    # To upgrade all installed packages to latest versions
+apt-get dist-upgrade  # Use this if it says the following packages where kept back
+apt-get install <pkg> # To install a particular package
+apt-get remove <pkg>  # Uninstall package
+
+# dpkg-reconfigure
+dpkg-reconfigure <pkg> # To reconfigure a package if you config'd it wrong
+
+# get updates automatically
+- install apticron

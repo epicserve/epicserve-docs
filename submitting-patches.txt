@@ -1,0 +1,5 @@
+# Submitting patches using diff
+diff -urN original-directory altered-directory > something.patch
+
+# Submitting patches using svn
+svn diff checkout-directory > something.patch
