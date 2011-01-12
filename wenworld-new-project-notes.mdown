@@ -1,10 +1,36 @@
 ## Workflow for checking out an existing Wenworld Project locally.
 
-### 1. Clone svn repository
+### Create an svn repository
+
+Connect to titan and create the svn repository
+
+    $ ssh titan
+    $ cd /Volumes/Ontario/svn
+    $ svnadmin create example
+    $ sudo chown -R www example
+
+Create the standard subversion directory structure
+
+    $ sudo svn mkdir file:///Volumes/Ontario/svn/example/trunk \
+    file:///Volumes/Ontario/svn/example/branches \
+    file:///Volumes/Ontario/svn/example/tags \
+    -m "Adding standard subversion directory structure"
+
+Run the following to make sure the repository is setup correctly
+
+    $ sudo svn list file:///Volumes/Ontario/svn/example
+
+Running the previous command should give you the following output
+
+    branches/
+    tags/
+    trunk/
+
+### 1. Clone svn the repository
 
 The following example clones the *example* subversion repository using the standard layout.
 
-    $ git svn clone -s https://svn.example.com/example example
+    $ git svn clone -s https://svn.wenatcheeworld.com/example example
 
 ### 2. Dump Database
 

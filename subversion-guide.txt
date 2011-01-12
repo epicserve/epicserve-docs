@@ -5,9 +5,10 @@ svnadmin create /www/svn/myproject
 
 
 // Add directories for your main trunk and tags, and branches
-svn mkdir file:///www/svn/myproject/trunk -m "adding the trunk directory"
-svn mkdir file:///www/svn/myproject/branches -m "adding the branches directory"
-svn mkdir file:///www/svn/myproject/tags -m "adding the tags directory"
+sudo svn mkdir file:///www/svn/myproject/trunk \
+file:///www/svn/myproject/branches \
+file:///www/svn/myproject/tags \
+-m "Adding standard subversion directory structure"
 
 // double check your repository
 // list what is in your repository
