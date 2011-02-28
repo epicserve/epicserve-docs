@@ -26,11 +26,20 @@ Running the previous command should give you the following output
     tags/
     trunk/
 
-### 1. Clone svn the repository
+### 1. Clone a SVN repository or Push to an empty SVN repository
 
+**Cone a SVN Repository**  
 The following example clones the *example* subversion repository using the standard layout.
 
     $ git svn clone -s https://svn.wenatcheeworld.com/example example
+
+**Push to an empty SVN repository**
+
+    $ cd /path/to/local/git-project
+    $ git svn init https://svn.wenatcheeworld.com/example -s
+    $ git svn fetch
+    $ git rebase trunk
+    $ git svn dcommit
 
 ### 2. Dump Database
 
