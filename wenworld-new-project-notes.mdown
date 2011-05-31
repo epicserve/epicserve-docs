@@ -6,12 +6,11 @@ Connect to titan and create the svn repository
 
     $ ssh titan
     $ cd /Volumes/Ontario/svn
-    $ svnadmin create example
-    $ sudo chown -R www example
+    $ sudo -u www svnadmin create example
 
 Create the standard subversion directory structure
 
-    $ sudo svn mkdir file:///Volumes/Ontario/svn/example/trunk \
+    $ sudo -u www svn mkdir file:///Volumes/Ontario/svn/example/trunk \
     file:///Volumes/Ontario/svn/example/branches \
     file:///Volumes/Ontario/svn/example/tags \
     -m "Adding standard subversion directory structure"
