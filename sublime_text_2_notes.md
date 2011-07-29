@@ -8,6 +8,14 @@
         "use_tab_stops": true
     }
 
+## User Global Settings
+
+Added the [Soda Theme](https://github.com/buymeasoda/soda-theme) to make things look a little nicer.
+
+    {
+        "theme": "Soda Dark.sublime-theme"
+    }
+
 ## Setup Sublime Command Line Helper
 
     ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/usr/local/bin/subl
@@ -22,7 +30,7 @@ Now you can load a folder into Sublime from the command line.
 - [Django4ST2](https://github.com/squ1b3r/Django4ST2)
 - [sublime-2-zencoding](https://bitbucket.org/sublimator/sublime-2-zencoding) ([usage notes](http://www.sublimetext.com/forum/viewtopic.php?f=2&t=580&p=10654#p10654))
 
-## Things Text Mate had that I Miss
+## Things TextMate had that I Miss
 
 - Git commit messages had syntax highlighting
 
