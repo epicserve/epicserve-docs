@@ -8,6 +8,14 @@
         "use_tab_stops": true
     }
 
+## User Global Settings
+
+Added the [Soda Theme](https://github.com/buymeasoda/soda-theme) to make things look a little nicer.
+
+    {
+        "theme": "Soda Dark.sublime-theme"
+    }
+
 ## Setup Sublime Command Line Helper
 
     ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/usr/local/bin/subl
