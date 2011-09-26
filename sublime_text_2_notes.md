@@ -1,11 +1,12 @@
 ## User File Settings
 
     {
-        "font_face": "Meslo LG S DZ",
+        "font_face": "Monaco",
         "font_size": 12,
         "tab_size": 4,
         "translate_tabs_to_spaces": true,
-        "use_tab_stops": true
+        "use_tab_stops": true,
+        "trim_trailing_white_space_on_save": true
     }
 
 ## User Global Settings
@@ -36,6 +37,6 @@ Now you can load a folder into Sublime from the command line.
 
 ## Wish List
 
-- I wish I could hit CMD+p and type a path to a folder and then hit enter to have it loaded to my project.
 - It would be nice if you could right click on a folder and have a choice to "open in terminal"
-- Typing a few letters of a variable, method or object and then hitting escape in a python or javascript file would complete the name of what you where typing.
+- Better variable, method and class name completion in Python
+- A shortcut to preview reStructuredText and Markdown documents
