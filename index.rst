@@ -11,6 +11,9 @@ Git Docs
 
    git/*
 
+Uncategorized Notes
+-------------------
+
 .. toctree::
    :maxdepth: 1
    :glob:
