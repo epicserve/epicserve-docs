@@ -7,7 +7,12 @@ Git Docs
 
 .. toctree::
    :maxdepth: 1
+   :glob:
 
-   git_notes
-   git_svn
-   svn_to_git
+   git/*
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   *
