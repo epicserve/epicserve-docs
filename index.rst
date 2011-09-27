@@ -1,5 +1,5 @@
 Welcome to Brent's Docs!
-========================================
+========================
 
 
 Git Docs
@@ -10,6 +10,14 @@ Git Docs
    :glob:
 
    git/*
+
+System Administration
+---------------------
+
+.. toctree::
+    :maxdepth: 1
+
+    common_commands
 
 Uncategorized Notes
 -------------------
