@@ -18,6 +18,7 @@ System Administration
     :maxdepth: 1
 
     common_commands
+    compiling_notes
 
 Uncategorized Notes
 -------------------

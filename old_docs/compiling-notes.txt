@@ -1,2 +1,0 @@
-# To log configure output
-./configure > log.txt 2>&1
