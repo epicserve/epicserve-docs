@@ -2,6 +2,16 @@ Welcome to Brent's Docs!
 ========================
 
 
+Django Docs
+-----------
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   django/*
+
+
 Git Docs
 --------
 
