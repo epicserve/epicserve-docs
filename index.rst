@@ -18,14 +18,6 @@ Django Docs
 
    django/*
 
-SVN Docs
---------
-
-.. toctree::
-   :maxdepth: 1
-
-   svn_notes
-
 
 Git Docs
 --------
@@ -35,6 +27,16 @@ Git Docs
    :glob:
 
    git/*
+
+
+SVN Docs
+--------
+
+.. toctree::
+   :maxdepth: 1
+
+   svn_notes
+
 
 System Administration
 ---------------------
