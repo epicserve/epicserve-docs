@@ -1,7 +1,0 @@
-# command to change the security context 
-chcon --reference=/var/www/html /var/www/html/test.php
-
-# command to list the security context
-ls -Z /var/www/html/test.php
-
-# I need to look at the Deployment Guide on Security and SELinux
