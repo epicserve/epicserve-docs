@@ -1,7 +1,0 @@
-# Examples
-find . -name '*.php' | xargs perl -i.bak -wpe 's/"{INCLUDES}([-_a-zA-Z0-9\.]+)"/INCLUDES . '\''$1'\''/g'
-
-# Example using a perl positive lookup assertion to avoid errors if the option
-# isn't found.
-find . -name '*.php' | xargs perl -i.bak -wpe 's/include((?:_once)?)\(INCLUDES
-?\. ?['\''"]?([^'\''^"^\)]+)['\''"]?\)/include$1('\''$2'\'')/g'
