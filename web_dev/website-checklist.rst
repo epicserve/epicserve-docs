@@ -1,4 +1,5 @@
-# Website Pre-Launch Check List
+Website Pre-Launch Check List
+=============================
 
 - Make a favicon
 - Make sprites
@@ -16,5 +17,3 @@
 - Double check your links (http://validator.w3.org/checklink/)
 - Test all forms for validation and functionality
 - Optimize the site for performance, http://developer.yahoo.com/performance/rules.html
-    
-

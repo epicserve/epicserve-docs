@@ -44,3 +44,13 @@ System Administration
     :glob:
 
     sys_admin/*
+
+
+Web Development Docs
+--------------------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    web_dev/*
