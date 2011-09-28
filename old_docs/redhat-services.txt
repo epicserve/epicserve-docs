@@ -1,5 +1,0 @@
-# Controlling Service Runlevels
-
-chkconfig --list # List services and their runlevels
-chkconfig <service> on|off # Used to run service at boot
-
