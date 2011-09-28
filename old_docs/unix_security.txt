@@ -1,2 +1,0 @@
-#Web Resources for checking for intruders
-http://www.us-cert.gov/reading_room/intruder_det_check.html#B1

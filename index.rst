@@ -1,5 +1,12 @@
-Welcome to Brent's Docs!
-========================
+Welcome to Brent O'Connor's Docs!
+=================================
+
+The following are links to documentation that I've collected and written over the years from doing web development.
+
+.. toctree::
+  :maxdepth: 1
+
+  pdf_combine
 
 
 Django Docs
@@ -10,6 +17,14 @@ Django Docs
    :glob:
 
    django/*
+
+SVN Docs
+--------
+
+.. toctree::
+   :maxdepth: 1
+
+   svn_notes
 
 
 Git Docs
@@ -26,15 +41,6 @@ System Administration
 
 .. toctree::
     :maxdepth: 1
+    :glob:
 
-    common_commands
-    compiling_notes
-
-Uncategorized Notes
--------------------
-
-.. toctree::
-   :maxdepth: 1
-   :glob:
-
-   *
+    sys_admin/*
