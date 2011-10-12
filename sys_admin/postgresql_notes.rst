@@ -29,6 +29,16 @@ Create a DB::
     GRANT
     postgres@hostname:~$
 
+List all databases::
+
+    $ psql -d template1
+    template1=# select datname from pg_database;
+
+Delete a database::
+
+    $ psql -d template1
+    template1=# drop database <db_name>;
+
 
 Sync a Production Postgres DB with a local development DB
 ---------------------------------------------------------
