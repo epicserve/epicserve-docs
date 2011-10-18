@@ -82,17 +82,19 @@ git-svn makes all of Subversions tags into very-short branches in Git of the for
 
 Example of how to move your local bare repository to a gitolite repository::
 
-    mv new-bare.git repository_name.git
-    tar czvf repository_name.git.tar.gz repository_name.git/
-    scp repository_name.git.tar.gz remote_host:
-    ssh remote_host
-    tar xzvf repository_name.git.tar.gz
-    sudo chown -R git:staff repository_name.git/
-    cd repository_name.git/
-    sudo find . -type f -exec chmod go= {} \;  # remove group and world permissions
-    sudo find . -type d -exec chmod go= {} \;  # remove group and world permissions
-    cd ../
-    mv repository_name.git /Users/git/repositories/
+    $ mv new-bare.git repository_name.git
+    $ tar czvf repository_name.git.tar.gz repository_name.git/
+    $ scp repository_name.git.tar.gz remote_host:
+    $ ssh remote_host
+    $ tar xzvf repository_name.git.tar.gz
+    $ sudo chown -R git:staff repository_name.git/
+    $ cd repository_name.git/
+    $ sudo find . -type f -exec chmod go= {} \;  # remove group and world permissions
+    $ sudo find . -type d -exec chmod go= {} \;  # remove group and world permissions
+    $ sudo su
+    $ cd /Users/git/repositories/
+    $ rm -rf repository_name.git/
+    $ mv ~username/repository_name.git .
 
 8. Clone new local copy
 -----------------------
