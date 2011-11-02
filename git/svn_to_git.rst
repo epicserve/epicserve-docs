@@ -113,6 +113,6 @@ List all unversioned files from your old local svn repository and copy them to t
 
 You can now move the local svn copy backup to your trash. It might be a good idea not to empty your trash until your sure everything is working correctly.
 
-9. Done.
---------
+9. Done
+-------
 
