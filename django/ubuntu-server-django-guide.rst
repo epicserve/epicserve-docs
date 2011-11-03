@@ -46,7 +46,7 @@ The version of Ubuntu I'm using for this guide is `Ubuntu 11.10 64 bit Server <h
 Step 2: Setup Port Forwarding
 -----------------------------
 
-Under the settings for your VM in VirtualBox click on the "Network" tab and then click on the "Port Forwarding" button. Now click on the plus add the following settings to setup port forwarding for web and ssh.
+Under the settings for your VM in VirtualBox click on the "Network" tab and then click on the "Port Forwarding" button. Now click on the plus and add the following settings to setup port forwarding for web and ssh.
 
 +------------+------------+-----------+-----------+----------+------------+
 | Name       | Protocol   | Host IP   | Host Port | Guest IP | Guest Port |
@@ -112,7 +112,7 @@ Git
 Step 4: Setup a Generic Deploy User
 -----------------------------------
 
-The reason we are setting up a generic deploy user is so that if you have multiple developers who are allowed to do deployments you can easily add the developers SSH public key to the deploy users ``/home/deploy/.ssh/authorized_keys`` file in order to allow them to do deployments.
+The reason we are setting up a generic deploy user is so that if you have multiple developers who are allowed to do deployments you can easily add the developer's SSH public key to the deploy user's ``/home/deploy/.ssh/authorized_keys`` file in order to allow them to do deployments.
 
 ::
 
@@ -155,7 +155,7 @@ Make a location for the example site::
     $ sudo chown www-data:www-data /srv/sites/example-site/static/cache
     $ sudo su deploy
 
-Create the file ``vi /srv/sites/example-site/config/settings/local.py`` and add the following, make sure to change the password and then save the file. I usually use a `random string generator <http://clsc.net/tools/random-string-generator.php>`_ to generate a new password for each new Postgresql database and user::
+Create the file ``/srv/sites/example-site/config/settings/local.py`` and add the following. Make sure to change the password and then save the file. I usually use a `random string generator <http://clsc.net/tools/random-string-generator.php>`_ to generate a new password for each new Postgresql database and user::
 
     from base import *
 
