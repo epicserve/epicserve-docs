@@ -5,38 +5,49 @@ PostgreSQL Notes
 Postgres Administration
 -----------------------
 
+Postgres Shell
+~~~~~~~~~~~~~~
+
+Run the following to access the Postgres shell::
+
+    $ psql -d template1
+    template1=#
+
+User Management
+~~~~~~~~~~~~~~~
+
 Create a user::
 
-    sudo su postgres
-    postgres@hostname:~$ createuser
-    Enter name of role to add: username
+    $ createuser dbusername
     Shall the new role be a superuser? (y/n) n
     Shall the new role be allowed to create databases? (y/n) n
     Shall the new role be allowed to create more new roles? (y/n) n
-    CREATE ROLE
 
-Create a DB::
+Create a user with a password and no privileges::
 
-    postgres@hostname:~$ createdb databasename
-    CREATE DATABASE
-    postgres@hostname:~$
+    $ createuser -DRSW dbusername
 
-    $ Grant access for the user to a DB
-    postgres@hostname:~$ psql
-    postgres=# alter user username with encrypted password 'password';
-    ALTER ROLE
-    postgres=# grant all privileges on database databasename to username;
-    GRANT
-    postgres@hostname:~$
+List all users::
+
+    template1=# select usename from pg_user;
+
+Delete a user::
+
+    $ dropuser dbusername
+
+Database Management
+~~~~~~~~~~~~~~~~~~~
+
+Create a database::
+
+    $ createdb dbname -O dbusername
 
 List all databases::
 
-    $ psql -d template1
     template1=# select datname from pg_database;
 
 Delete a database::
 
-    $ psql -d template1
     template1=# drop database <db_name>;
 
 
