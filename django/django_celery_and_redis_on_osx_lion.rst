@@ -31,6 +31,13 @@ Installation and Setup
         CELERY_TASK_RESULT_EXPIRES =  10
         CELERYBEAT_SCHEDULER="djcelery.schedulers.DatabaseScheduler"
 
+.. note::
+
+        If you run several sites that use Celery you will want to increment the number for ``REDIS_DB`` and ``BROKER_VHOST`` setting by 1 for each new site. Example for the next site you add, you would want to change those settings to the following::
+
+                BROKER_VHOST = "1"
+                REDIS_DB = 1
+
 5. In your local development settings file it might be good to add ``CELERY_ALWAYS_EAGER = True``. This blocks the run tests (sans celery) that way you can test and develop easier.
 
 6. Open a terminal window and start redis. ::
