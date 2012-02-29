@@ -1,4 +1,0 @@
-# Adding aliases
-- edit the /etc/aliases file
-- run newaliases
-- reload postfix
