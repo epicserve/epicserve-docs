@@ -42,14 +42,21 @@ Create a database::
 
     $ createdb dbname -O dbusername
 
-List all databases::
-
-    template1=# select datname from pg_database;
-
 Delete a database::
 
     template1=# drop database <db_name>;
 
+List all databases::
+
+    template1=# select datname from pg_database;
+
+List all databases sizes::
+
+    template1=# SELECT pg_database.datname, pg_size_pretty(pg_database_size(pg_database.datname)) AS size FROM pg_database;
+
+List the size of each table in a database:
+
+    db_name=# SELECT relname, reltuples, relpages * 8 / 1024 AS "MB" FROM pg_class ORDER BY relpages DESC;
 
 Sync a Production Postgres DB with a local development DB
 ---------------------------------------------------------
