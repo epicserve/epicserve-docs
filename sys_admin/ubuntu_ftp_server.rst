@@ -20,6 +20,11 @@ following line is uncommented::
 
     write_enable=YES
 
+Update the umask so that files uploaded will have global read permissions for servering the files up using a web server. Edit ``/etc/vsftpd.conf`` and make sure the
+following line is uncommented::
+
+    local_umask=022
+
 Limit users to their home directories by uncommenting the following line in ``/etc/vsftpd.conf``::
 
     chroot_list_enable=YES
