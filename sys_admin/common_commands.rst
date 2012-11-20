@@ -21,6 +21,9 @@ Check what devices are taking the most space::
 
     $ ls -lrSh /dev | tail -50
 
+Do a grep regex search::
+
+    $ find . -name "*.xml" | xargs grep -Pzo "(?s)<pub10>.*?</pub10>"
 
 Computer Information
 --------------------
