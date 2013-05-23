@@ -136,12 +136,20 @@ Setup the new remote branch locally so you can push and pull to the new remote b
 
     git checkout --track -b newbranch origin/newbranch
 
-Delete a remote Branch
-----------------------
+Branch Management
+-----------------
 
-::
+List merged branches::
 
-    git push origin :mybranch
+    git branch -a --merged
+
+Delete a local branch that's been merged::
+
+    git branch -d merged_branch_name
+
+Delete remote branch that's been merged::
+
+    git push origin :merged_branch_name
 
 Share Uncommitted Changes
 -------------------------
