@@ -1,7 +1,7 @@
 Welcome to Brent O'Connor's Docs!
 =================================
 
-The following are links to documentation that I've collected and written over the years from doing web development.
+Brent O'Connor's personal web development and system administration documentation.
 
 .. toctree::
   :maxdepth: 1
