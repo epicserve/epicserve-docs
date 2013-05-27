@@ -7,12 +7,6 @@ docs.readthedocs.org/en/latest/>`_ or view the source on `Github
 <https://github.com/epicserve/epicserve-docs>`_. Please feel free to submit
 issues or make pull requests.
 
-.. toctree::
-  :maxdepth: 1
-
-  pdf_combine
-
-
 Django Docs
 -----------
 
