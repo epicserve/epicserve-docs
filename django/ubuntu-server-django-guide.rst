@@ -59,6 +59,14 @@ Under the settings for your VM in VirtualBox click on the "Network" tab and then
 Step 3: Install Software
 ------------------------
 
+Before you begin it might be a good idea to update your system clock::
+
+    $ sudo ntpdate time.nist.gov
+
+Download lists of new/upgradable packages::
+
+    $ sudo aptitude update
+
 OpenSSH
 ~~~~~~~
 
@@ -125,8 +133,7 @@ Step 5: Install an Example Site
 Setup a virtualenv::
 
     $ sudo apt-get install python-setuptools
-    $ sudo easy_install pip
-    $ sudo pip install virtualenv
+    $ sudo easy_install pip virtualenv
     $ cd /usr/local/
     $ sudo mkdir virtualenvs
     $ sudo chown deploy:deploy virtualenvs
@@ -149,6 +156,7 @@ Make a location for the example site::
     $ cd sites
     $ git clone git://github.com/epicserve/django-base-site.git example-site
     $ cd example-site/
+    $ git checkout -b example_site 5b05e2dbe5
     $ echo `pwd` > /usr/local/virtualenvs/example-site/lib/python2.7/site-packages/django_project_root.pth
     $ mkdir -p static/cache
     $ exit
@@ -183,15 +191,7 @@ Install the sites required python packages::
 
     $ source /usr/local/virtualenvs/example-site/bin/activate
     $ cd /srv/sites/example-site/
-    $ pip install -r config/requirements.txt
-
-Install Gunicorn::
-
-    $ pip install gunicorn
-
-Install psycopg2::
-
-    $ pip install psycopg2
+    $ pip install -r config/requirements/production.txt
 
 Create a PostgreSQL user and database for your example-site::
 
@@ -254,7 +254,7 @@ Create a new file ``sudo vi /etc/nginx/sites-available/example-site.conf`` and a
 
 
         location  / {
-            proxy_pass            http://127.0.0.1:8001/;
+            proxy_pass            http://127.0.0.1:8000/;
             proxy_redirect        off;
             proxy_set_header      Host             $host;
             proxy_set_header      X-Real-IP        $remote_addr;
@@ -283,5 +283,4 @@ While still connected to your Ubuntu server via SSH run the following, which sho
     wget -qO- 127.0.0.1:80
 
 Since you setup port forwarding in step 2 for web, you should also be able to open up your browser on your local host machine and pull up the website using the URL, http://127.0.0.1:8080.
-
 
