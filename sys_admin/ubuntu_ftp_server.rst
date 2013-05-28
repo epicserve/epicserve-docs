@@ -96,7 +96,21 @@ username you would like to use. ::
     sudo passwd my_user;
 
 
+How to fix: 500 OOPS: vsftpd: refusing to run with writable root inside chroot()
+--------------------------------------------------------------------------------
 
+The following solution was found on `askubuntu.com <http://askubuntu.com/a/240560/162597>`_.
 
+Install a different version of vsftpd::
 
+    sudo add-apt-repository ppa:thefrontiergroup/vsftpd
+    sudo apt-get update
+    sudo apt-get install vsftpd
 
+Add the following to the bottom of the config file, /usr/sbin/vsftpd::
+
+    allow_writeable_chroot=YES
+
+Restart vsftpd::
+
+    sudo service vsftpd restart
