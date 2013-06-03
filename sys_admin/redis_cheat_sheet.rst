@@ -17,7 +17,9 @@ Delete a key::
 
     redis 127.0.0.1:6379> DEL my_key_name
 
-Script to list all key sizes::
+Script to list all key sizes:
+
+.. code-block:: bash
 
     #!/usr/bin/env bash
 
