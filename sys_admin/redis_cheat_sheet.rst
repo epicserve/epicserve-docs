@@ -23,6 +23,10 @@ Script to list all key sizes:
 
     #!/usr/bin/env bash
 
+    # This script prints out all of your Redis keys and their size in a human readable format
+    # Copyright 2013 Brent O'Connor
+    # License: http://www.apache.org/licenses/LICENSE-2.0
+
     human_size() {
             awk -v sum="$1" ' BEGIN {hum[1024^3]="Gb"; hum[1024^2]="Mb"; hum[1024]="Kb"; for (x=1024^3; x>=1024; x/=1024) { if (sum>=x) { printf "%.2f %s\n",sum/x,hum[x]; break; } } if (sum<1024) print "1kb"; } '
     }
