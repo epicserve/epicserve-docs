@@ -18,6 +18,12 @@ Add the following to the `/etc/monit/conf.d/global_settings` file::
     set mailserver localhost
     set alert sysadmin@company.com
 
+    ## Uncomment the following if you don't want alerts every time you reload or
+    ## restart monit.
+    #
+    # check system localhost
+    #     alert sysadmin@company.com but not on { instance }
+
 Reload monit `sudo service monit reload`
 
 Setup Basic System Alerts
