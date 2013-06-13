@@ -34,3 +34,27 @@ Add the following to the `/etc/monit/conf.d/system_checks` file::
         if space usage > 80% then alert
 
 Reload monit `sudo service monit reload`
+
+Monitoring Gunicorn Example
+---------------------------
+
+Add the following to the `/etc/monit/conf.d/gunicorn` file::
+
+    check process gunicorn with pidfile /var/run/gunicorn_www.example.com.pid
+        start program = "/sbin/start gunicorn_www.example.com"
+        stop program  = "/sbin/stop gunicorn_www.example.com"
+        if failed unixsocket /tmp/gunicorn_www.example.com.sock then start
+        if totalcpu > 20% for 1 cycles then alert
+        if totalmemory usage > 60% then restart
+
+Reload monit `sudo service monit reload`
+
+.. note::
+
+    Make sure you use `totalcpu` and `totalmemory`, because you want to make
+    sure it totals the memory and cpu usage for all child processes.
+
+    Also, the name of the process doesn't seem to matter. In the above example
+    I could have used "`check process django_gunicorn`" if I wanted instead of
+    "`check process gunicorn`." The name you use is what will be used in alert
+    emails.
