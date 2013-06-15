@@ -6,7 +6,7 @@ Installation
 
 ::
 
-    $ apt-get install libevent-dev python-all-dev daemontools lzop pv postgresql-client
+    $ sudo apt-get install libevent-dev python-all-dev daemontools lzop pv postgresql-client
     $ sudo pip install wal-e
     $ umask u=rwx,g=rx,o=
     $ mkdir -p /etc/wal-e.d/env
