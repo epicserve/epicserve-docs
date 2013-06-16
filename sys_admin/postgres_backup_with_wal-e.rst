@@ -1,11 +1,9 @@
 Postgres Backup with Wal-e
 ==========================
 
-.. warning::
+The following are the steps I took to setup `Wal-e 0.6.2`_ on Ubuntu 12.04.2 LTS and Postgres 9.1.9.
 
-    This is currently a work in progress and isn't to be trusted yet.
-
-The following are the steps I took to setup Wal-e on Ubuntu 12.04.2 LTS and Postgres 9.1.9.
+.. _Wal-e 0.6.2: https://github.com/wal-e/wal-e
 
 Installation
 ------------
@@ -34,4 +32,5 @@ Restart postgres::
 
 Make a base backup::
 
-    $ sudo -u postgres bash -c "envdir /etc/wal-e.d/env /usr/local/bin/wal-e backup-push /var/lib/postgresql/9.1/main"
+    $ sudo -u postgres bash -c "envdir /etc/wal-e.d/env /usr/local/bin/wal-e backup-push \
+    /var/lib/postgresql/9.1/main"
