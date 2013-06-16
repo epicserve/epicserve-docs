@@ -25,7 +25,7 @@ Added the following to the end of the file, `/etc/postgresql/9.1/main/postgresql
 
     wal_level = archive
     archive_mode = on
-    archive_command = 'envdir /etc/wal-e.d/env wal-e wal-push %p'
+    archive_command = 'envdir /etc/wal-e.d/env /usr/local/bin/wal-e wal-push %p'
     archive_timeout = 60
 
 Restart postgres::
@@ -34,4 +34,4 @@ Restart postgres::
 
 Make a base backup::
 
-    $ sudo envdir /etc/wal-e.d/env wal-e backup-push /var/lib/postgresql/9.1/main
+    $ sudo -u postgres bash -c "envdir /etc/wal-e.d/env /usr/local/bin/wal-e backup-push /var/lib/postgresql/9.1/main"
