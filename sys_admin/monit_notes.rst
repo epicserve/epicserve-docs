@@ -1,7 +1,7 @@
 Monit Notes
 ===========
 
-`Monit <http://mmonit.com/monit/>`_ is a good service for sending alerts and restart services based on simple rules.
+`Monit <http://mmonit.com/monit/>`_ is a good service for sending alerts and restarting services based on simple rules.
 
 Installing
 ----------
