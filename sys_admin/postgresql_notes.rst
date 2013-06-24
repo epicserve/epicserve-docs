@@ -54,9 +54,16 @@ List all databases sizes::
 
     template1=# SELECT pg_database.datname, pg_size_pretty(pg_database_size(pg_database.datname)) AS size FROM pg_database;
 
-List the size of each table in a database:
+List the size of each table in a database::
 
     db_name=# SELECT relname, reltuples, relpages * 8 / 1024 AS "MB" FROM pg_class ORDER BY relpages DESC;
+
+Helpful Queries
+---------------
+
+List the number of concurrent connections:
+
+    template1=# select * from pg_stat_activity;
 
 Sync a Production Postgres DB with a local development DB
 ---------------------------------------------------------
