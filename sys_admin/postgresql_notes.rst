@@ -61,7 +61,7 @@ List the size of each table in a database::
 Helpful Queries
 ---------------
 
-List the number of concurrent connections:
+List the number of concurrent connections::
 
     template1=# select * from pg_stat_activity;
 
