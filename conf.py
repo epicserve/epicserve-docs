@@ -1,4 +1,10 @@
-import sphinx_rtd_theme
+import os
+
+# check to see if this file is getting loaded on readthedocs.org
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
+if on_rtd is False:
+    import sphinx_rtd_theme
 
 # -*- coding: utf-8 -*-
 #
@@ -86,7 +92,10 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
+if on_rtd is False:
+    html_theme = 'sphinx_rtd_theme'
+else:
+    html_theme = 'default'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
