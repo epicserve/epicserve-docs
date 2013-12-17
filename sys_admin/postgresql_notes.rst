@@ -84,6 +84,68 @@ Switch back to the remote host tab and do the following::
     $ rm ads.sql
 
 
+Extracting a single database from a pg_dumpall PostgreSQL dump
+--------------------------------------------------------------
+
+If you need to restore a single database from a backup where you've backed up
+all your databases using the ``pg_dumpall`` command, then you can use the
+following script to extract a single database from your ``pg_dumpall`` file.
+I found this script on Mads Sülau Jørgensen's blog_.
+
+.. _blog: http://madssj.com/blog/2010/04/09/extracting-a-single-database-from-a-pg_dumpall-postgresql-dump/
+
+.. warning::
+
+    This hasn't personally been tested yet.
+
+Usage::
+
+    $ postgresql_dump_extract.sh <dump_file> <db_name> > database.sql
+
+Script:
+
+.. code-block:: bash
+
+    #!/bin/sh
+
+    if [ $# -ne 2 ]
+    then
+        echo "Usage: $0 <postgresql sql dump> <db_name>" >&2
+        exit 1
+    fi
+
+    db_file=$1
+    db_name=$2
+
+    if [ ! -f $db_file -o ! -r $db_file ]
+    then
+        echo "error: $db_file not found or not readable" >&2
+        exit 2
+    fi
+
+    grep -b "^\connect" $db_file | grep -m 1 -A 1 "$db_name$" | while read line
+    do
+        bytes=`echo $line | cut -d: -f1`
+
+        if [ -z "$start_point" ]
+        then
+            start_point=$bytes
+        else
+            end_point=$bytes
+        fi
+    done
+
+    if [ -z "$start_point" -o -z "$end_point" ]
+    then
+        echo "error: start or end not found" >&2
+        exit 3
+    fi
+
+    db_length=`expr $end_point - $start_point`
+
+    tail -c +$start_point $db_file | head -c $db_length | tail +3
+
+
 Common Postgres Shell Commands
 ------------------------------
 
