@@ -33,7 +33,7 @@ into this::
 If your svn repo was using svn:ignore properties, you can easily convert this to a `.gitignore` file using::
 
     cd ~/temp
-    git svn show-ignore > .gitignore
+    git svn show-ignore -i trunk > .gitignore
     git add .gitignore
     git commit -m 'Convert svn:ignore properties to .gitignore.'
 
