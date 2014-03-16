@@ -102,7 +102,7 @@ Setup the timezone
     dpkg-reconfigure tzdata
     ntpdate ntp.ubuntu.com
 
-Edit `/etc/cron.daily` to match the following::
+Edit `/etc/cron.daily/ntpdate` to match the following::
 
     #!/bin/bash
 
