@@ -30,7 +30,11 @@ Computer Information
 
 Print operating system name::
 
-    uname -a
+    $ uname -a
+
+On Ubuntu::
+
+    $ lsb_release -a
 
 
 Network Commands
