@@ -20,6 +20,6 @@ Ubuntu - Setup Local Email Forwarding
 
     # You might have to install mailutils
 
-    $ echo "Testing" | mail root -s "Testing"
+    $ echo "Time sent: $(date +%Y%m%d-%H%M%S)" | mail root -s "Testing email on $(hostname -f)"
 
     # You should get an email in the inbox of whatever email you set root to forward to
